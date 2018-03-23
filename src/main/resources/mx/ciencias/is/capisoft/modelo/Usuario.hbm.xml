@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 23, 2018 10:36:37 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.ciencias.is.capisoft.modelo.Usuario" table="usuario" schema="public" optimistic-lock="version">
+        <id name="correo" type="string">
+            <column name="correo" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombreUsuario" type="string">
+            <column name="nombre_usuario" length="16" />
+        </property>
+        <property name="contrasena" type="string">
+            <column name="contrasena" />
+        </property>
+        <property name="rutaFoto" type="string">
+            <column name="ruta_foto" />
+        </property>
+        <property name="fechaRegistro" type="date">
+            <column name="fecha_registro" length="13" />
+        </property>
+        <property name="rol" type="string">
+            <column name="rol" length="10" />
+        </property>
+        <set name="preguntas" table="pregunta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usuario" length="20" />
+            </key>
+            <one-to-many class="mx.ciencias.is.capisoft.modelo.Pregunta" />
+        </set>
+        <set name="comentarios" table="comentario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usuario" length="20" />
+            </key>
+            <one-to-many class="mx.ciencias.is.capisoft.modelo.Comentario" />
+        </set>
+    </class>
+</hibernate-mapping>
