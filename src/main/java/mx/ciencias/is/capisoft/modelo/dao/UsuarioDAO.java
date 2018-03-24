@@ -8,6 +8,7 @@ package mx.ciencias.is.capisoft.modelo.dao;
 import mx.ciencias.is.capisoft.modelo.HibernateUtil;
 import mx.ciencias.is.capisoft.modelo.Usuario;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -42,7 +43,42 @@ public class UsuarioDAO {
         tx.rollback();
       }
       e.printStackTrace();
+    } finally {
+      session.close();
     }
 
+  }
+
+  /**
+   * Obtiene un usuario
+   *
+   * @param correoUsuario El correo que identifica al usuario que se desea
+   * obtener de la BD
+   * @return El usuario identificado por el correo, o null si no existe
+   */
+  public Usuario obtener(String correoUsuario) {
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    Usuario usuarioObtenido = null;
+    try {
+      tx.begin();
+
+      String queryString = "from Usuario u where u.correo=:c";
+      Query query = session.createQuery(queryString);
+      query.setParameter("c", correoUsuario);
+
+      usuarioObtenido = (Usuario) query.uniqueResult();
+
+      tx.commit();
+
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return usuarioObtenido;
   }
 }
