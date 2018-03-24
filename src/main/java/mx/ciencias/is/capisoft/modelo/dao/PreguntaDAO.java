@@ -78,4 +78,33 @@ public class PreguntaDAO {
     return preguntasObtenidas;
   }
 
+  /**
+   * Obtiene una pregunta específica
+   *
+   * @param idPregunta El id de la pregunta que se quiere obtener
+   * @return La pregunta identificada por el id, o null si no existe
+   */
+  public Pregunta obtener(int idPregunta) {
+    Pregunta preguntaObtenida = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      String queryString = "from Pregunta p where p.idPregunta=:id";
+      Query query = session.createQuery(queryString);
+      preguntaObtenida = (Pregunta) query.uniqueResult();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return preguntaObtenida;
+  }
+
 }
