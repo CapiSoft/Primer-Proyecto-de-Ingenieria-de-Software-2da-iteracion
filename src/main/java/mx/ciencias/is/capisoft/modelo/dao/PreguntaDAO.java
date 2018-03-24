@@ -8,7 +8,6 @@ package mx.ciencias.is.capisoft.modelo.dao;
 import java.util.List;
 import mx.ciencias.is.capisoft.modelo.HibernateUtil;
 import mx.ciencias.is.capisoft.modelo.Pregunta;
-import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -61,7 +60,7 @@ public class PreguntaDAO {
     try {
       tx.begin();
 
-      String queryString = "from Pregunta";
+      String queryString = "from Pregunta p order by p.fechaPublicacion desc";
       Query query = session.createQuery(queryString);
       preguntasObtenidas = (List<Pregunta>) query.list();
 
@@ -130,6 +129,38 @@ public class PreguntaDAO {
     } finally {
       session.close();
     }
+  }
+
+  /**
+   * Busca entre las preguntas
+   *
+   * @param contenido Una cadena a buscar dentro de las preguntas
+   * @return Una lista con todas las preguntas que contienen la cadena buscada
+   */
+  public List<Pregunta> buscar(String contenido) {
+    List<Pregunta> preguntasObtenidas = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      String queryString = "from Pregunta p where (p.titulo like ?)"
+              + " or (p.pregunta like ?) order by p.fechaPublicacion desc";
+      Query query = session.createQuery(queryString);
+      query.setString(0, "%" + contenido + "%");
+      query.setString(1, "%" + contenido + "%");
+      preguntasObtenidas = (List<Pregunta>) query.list();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return preguntasObtenidas;
   }
 
 }
