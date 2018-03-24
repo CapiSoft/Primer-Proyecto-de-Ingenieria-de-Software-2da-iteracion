@@ -13,10 +13,10 @@ public class Comentario  implements java.io.Serializable {
 
 
      private int idComentario;
-     private Comentario comentario;
+     private Comentario responde;
      private Pregunta pregunta;
      private Usuario usuario;
-     private String comentario_1;
+     private String comentario;
      private Date fecha;
      private Set comentarios = new HashSet(0);
 
@@ -29,10 +29,10 @@ public class Comentario  implements java.io.Serializable {
     }
     public Comentario(int idComentario, Comentario comentario, Pregunta pregunta, Usuario usuario, String comentario_1, Date fecha, Set comentarios) {
        this.idComentario = idComentario;
-       this.comentario = comentario;
+       this.responde = comentario;
        this.pregunta = pregunta;
        this.usuario = usuario;
-       this.comentario_1 = comentario_1;
+       this.comentario = comentario_1;
        this.fecha = fecha;
        this.comentarios = comentarios;
     }
@@ -44,12 +44,12 @@ public class Comentario  implements java.io.Serializable {
     public void setIdComentario(int idComentario) {
         this.idComentario = idComentario;
     }
-    public Comentario getComentario() {
-        return this.comentario;
+    public Comentario getResponde() {
+        return this.responde;
     }
     
-    public void setComentario(Comentario comentario) {
-        this.comentario = comentario;
+    public void setResponde(Comentario responde) {
+        this.responde = responde;
     }
     public Pregunta getPregunta() {
         return this.pregunta;
@@ -65,12 +65,12 @@ public class Comentario  implements java.io.Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    public String getComentario_1() {
-        return this.comentario_1;
+    public String getComentario() {
+        return this.comentario;
     }
     
-    public void setComentario_1(String comentario_1) {
-        this.comentario_1 = comentario_1;
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
     public Date getFecha() {
         return this.fecha;
