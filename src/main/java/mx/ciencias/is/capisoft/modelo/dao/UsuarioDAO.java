@@ -89,7 +89,7 @@ public class UsuarioDAO {
    * {@link #obtener(java.lang.String) obtener}
    */
   public void actualizar(Usuario usuarioActualizado) {
-    Session session = sessionFactory.getCurrentSession();
+    Session session = sessionFactory.openSession();
     Transaction tx = session.beginTransaction();
     try {
       tx.begin();
