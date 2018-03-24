@@ -107,4 +107,29 @@ public class PreguntaDAO {
     return preguntaObtenida;
   }
 
+  /**
+   * Actualiza una pregunta
+   *
+   * @param preguntaActualizada Una pregunta previamente obtenida con
+   * {@link #obtener(int) obtener} u {@link #obtener() obtener lista}
+   */
+  public void actualizar(Pregunta preguntaActualizada) {
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      session.merge(preguntaActualizada);
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+  }
+
 }
