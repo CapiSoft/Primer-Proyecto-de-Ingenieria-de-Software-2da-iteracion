@@ -5,8 +5,10 @@
  */
 package mx.ciencias.is.capisoft.modelo.dao;
 
+import java.util.List;
 import mx.ciencias.is.capisoft.modelo.Comentario;
 import mx.ciencias.is.capisoft.modelo.HibernateUtil;
+import mx.ciencias.is.capisoft.modelo.Pregunta;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -75,6 +77,38 @@ public class ComentarioDAO {
       session.close();
     }
     return comentarioObtenido;
+  }
+
+  /**
+   * Obtiene los comentarios de una pregunta
+   *
+   * @param pregunta Una pregunta obtenida anteriormente con
+   * {@link mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO#obtener() obtener} u {@link mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO#obtener(int)
+   * obtener lista}
+   * @return Una lista con todas los comentarios de la pregunta
+   */
+  public List<Comentario> obtener(Pregunta pregunta) {
+    List<Comentario> comentariosObtenidos = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      String queryString = "from Comentario c where c.pregunta.idPregunta=:idP";
+      Query query = session.createQuery(queryString);
+      query.setParameter("idP", pregunta.getIdPregunta());
+      comentariosObtenidos = (List<Comentario>) query.list();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return comentariosObtenidos;
   }
 
 }
