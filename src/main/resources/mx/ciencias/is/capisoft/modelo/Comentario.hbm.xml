@@ -1,33 +1,32 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 23, 2018 10:36:37 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class name="mx.ciencias.is.capisoft.modelo.Comentario" table="comentario" schema="public" optimistic-lock="version">
+  <class name="mx.ciencias.is.capisoft.modelo.Comentario" optimistic-lock="version" schema="public" table="comentario">
     <id name="idComentario" type="int">
-      <column name="id_comentario" />
-      <generator class="sequence" />
+      <column name="id_comentario"/>
+      <generator class="sequence"/>
     </id>
-    <many-to-one name="comentario" class="mx.ciencias.is.capisoft.modelo.Comentario" fetch="select">
-      <column name="responde" />
+    <many-to-one class="mx.ciencias.is.capisoft.modelo.Comentario" fetch="select" name="responde">
+      <column name="responde"/>
     </many-to-one>
-    <many-to-one name="pregunta" class="mx.ciencias.is.capisoft.modelo.Pregunta" fetch="select">
-      <column name="pregunta" />
+    <many-to-one class="mx.ciencias.is.capisoft.modelo.Pregunta" fetch="select" name="pregunta">
+      <column name="pregunta"/>
     </many-to-one>
-    <many-to-one name="usuario" class="mx.ciencias.is.capisoft.modelo.Usuario" fetch="select">
-      <column name="usuario" length="20" />
+    <many-to-one class="mx.ciencias.is.capisoft.modelo.Usuario" fetch="select" name="usuario">
+      <column length="20" name="usuario"/>
     </many-to-one>
-    <property name="comentario_1" type="string">
-      <column name="comentario" length="5000" />
+    <property name="comentario" type="string">
+      <column length="5000" name="comentario"/>
     </property>
     <property name="fecha" type="date">
-      <column name="fecha" length="13" />
+      <column length="13" name="fecha"/>
     </property>
-    <set name="comentarios" table="comentario" inverse="true" lazy="true" fetch="select">
+    <set fetch="select" inverse="true" lazy="true" name="comentarios" table="comentario">
       <key>
-        <column name="responde" />
+        <column name="responde"/>
       </key>
-      <one-to-many class="mx.ciencias.is.capisoft.modelo.Comentario" />
+      <one-to-many class="mx.ciencias.is.capisoft.modelo.Comentario"/>
     </set>
   </class>
 </hibernate-mapping>
