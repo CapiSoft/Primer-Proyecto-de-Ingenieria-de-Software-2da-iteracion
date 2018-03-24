@@ -140,4 +140,29 @@ public class ComentarioDAO {
     return comentariosObtenidos;
   }
 
+  /**
+   * Actualiza un comentario
+   *
+   * @param comentarioActualizado El comentario a actualizar previamente
+   * obtenido
+   */
+  public void actualizar(Comentario comentarioActualizado) {
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      session.merge(comentarioActualizado);
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+  }
+
 }
