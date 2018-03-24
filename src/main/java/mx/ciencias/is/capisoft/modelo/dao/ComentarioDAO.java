@@ -111,4 +111,33 @@ public class ComentarioDAO {
     return comentariosObtenidos;
   }
 
+  /**
+   * Obtiene una lista de comentarios que responden
+   *
+   * @param comentario Un comentario obtenido anteriormente
+   * @return Los comentarios que responden al comentario dado
+   */
+  public List<Comentario> obtener(Comentario comentario) {
+    List<Comentario> comentariosObtenidos = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      String queryString = "from Comentario c where c.responde.idComentario=:idC";
+      Query query = session.createQuery(queryString);
+      query.setParameter("idC", comentario.getIdComentario());
+      comentariosObtenidos = (List<Comentario>) query.list();
+
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return comentariosObtenidos;
+  }
+
 }
