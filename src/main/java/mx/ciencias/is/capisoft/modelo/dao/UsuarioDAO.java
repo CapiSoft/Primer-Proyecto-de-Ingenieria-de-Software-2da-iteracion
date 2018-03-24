@@ -81,4 +81,29 @@ public class UsuarioDAO {
     }
     return usuarioObtenido;
   }
+
+  /**
+   * Actualiza un usuario
+   *
+   * @param usuarioActualizado Un usuario previamente obtenido con
+   * {@link #obtener(java.lang.String) obtener}
+   */
+  public void actualizar(Usuario usuarioActualizado) {
+    Session session = sessionFactory.getCurrentSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      session.merge(usuarioActualizado);
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+  }
 }
