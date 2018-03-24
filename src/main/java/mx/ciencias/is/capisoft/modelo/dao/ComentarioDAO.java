@@ -8,6 +8,7 @@ package mx.ciencias.is.capisoft.modelo.dao;
 import mx.ciencias.is.capisoft.modelo.Comentario;
 import mx.ciencias.is.capisoft.modelo.HibernateUtil;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -44,6 +45,36 @@ public class ComentarioDAO {
     } finally {
       session.close();
     }
+  }
+
+  /**
+   * Obtiene un comentario
+   *
+   * @param id El identificador del comentario que se desea obtener
+   * @return El comentario identificado por el id, o null si no existe
+   */
+  public Comentario obtener(int id) {
+    Comentario comentarioObtenido = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    try {
+      tx.begin();
+
+      String queryString = "from Comentario c where c.idComentario=:id";
+      Query query = session.createQuery(queryString);
+      query.setParameter("id", id);
+      comentarioObtenido = (Comentario) query.uniqueResult();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return comentarioObtenido;
   }
 
 }
