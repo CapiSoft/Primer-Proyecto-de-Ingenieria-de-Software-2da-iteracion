@@ -30,9 +30,9 @@ public class UsuarioDAO {
    */
   public void crear(Usuario usuarioNuevo) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       session.persist(usuarioNuevo);
 
@@ -58,10 +58,10 @@ public class UsuarioDAO {
    */
   public Usuario obtener(String correoUsuario) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     Usuario usuarioObtenido = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Usuario u where u.correo=:c";
       Query query = session.createQuery(queryString);
@@ -90,9 +90,9 @@ public class UsuarioDAO {
    */
   public void actualizar(Usuario usuarioActualizado) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       session.merge(usuarioActualizado);
 
