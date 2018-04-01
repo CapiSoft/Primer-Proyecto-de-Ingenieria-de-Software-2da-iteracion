@@ -31,9 +31,9 @@ public class PreguntaDAO {
    */
   public void crear(Pregunta preguntaNueva) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       session.persist(preguntaNueva);
 
@@ -56,9 +56,9 @@ public class PreguntaDAO {
   public List<Pregunta> obtener() {
     List<Pregunta> preguntasObtenidas = null;
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Pregunta p order by p.fechaPublicacion desc";
       Query query = session.createQuery(queryString);
@@ -86,9 +86,9 @@ public class PreguntaDAO {
   public Pregunta obtener(int idPregunta) {
     Pregunta preguntaObtenida = null;
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Pregunta p where p.idPregunta=:id";
       Query query = session.createQuery(queryString);
@@ -114,9 +114,9 @@ public class PreguntaDAO {
    */
   public void actualizar(Pregunta preguntaActualizada) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       session.merge(preguntaActualizada);
 
@@ -140,9 +140,9 @@ public class PreguntaDAO {
   public List<Pregunta> buscar(String contenido) {
     List<Pregunta> preguntasObtenidas = null;
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Pregunta p where (p.titulo like ?)"
               + " or (p.pregunta like ?) order by p.fechaPublicacion desc";

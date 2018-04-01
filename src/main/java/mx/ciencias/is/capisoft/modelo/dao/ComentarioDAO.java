@@ -32,9 +32,9 @@ public class ComentarioDAO {
    */
   public void crear(Comentario comentarioNuevo) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       session.persist(comentarioNuevo);
 
@@ -58,9 +58,9 @@ public class ComentarioDAO {
   public Comentario obtener(int id) {
     Comentario comentarioObtenido = null;
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Comentario c where c.idComentario=:id";
       Query query = session.createQuery(queryString);
@@ -90,9 +90,9 @@ public class ComentarioDAO {
   public List<Comentario> obtener(Pregunta pregunta) {
     List<Comentario> comentariosObtenidos = null;
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Comentario c where c.pregunta.idPregunta=:idP";
       Query query = session.createQuery(queryString);
@@ -120,9 +120,9 @@ public class ComentarioDAO {
   public List<Comentario> obtener(Comentario comentario) {
     List<Comentario> comentariosObtenidos = null;
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       String queryString = "from Comentario c where c.responde.idComentario=:idC";
       Query query = session.createQuery(queryString);
@@ -148,9 +148,9 @@ public class ComentarioDAO {
    */
   public void actualizar(Comentario comentarioActualizado) {
     Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
+    Transaction tx = null;
     try {
-      tx.begin();
+      tx = session.beginTransaction();
 
       session.merge(comentarioActualizado);
 
