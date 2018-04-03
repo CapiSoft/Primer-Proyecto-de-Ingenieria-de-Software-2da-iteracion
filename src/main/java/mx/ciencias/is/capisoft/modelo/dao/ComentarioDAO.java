@@ -111,6 +111,34 @@ public class ComentarioDAO {
     return comentariosObtenidos;
   }
 
+  public List<Comentario> obtener(Pregunta pregunta, boolean fetchUsuario) {
+    List<Comentario> comentariosObtenidos = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = null;
+    try {
+      tx = session.beginTransaction();
+
+      String queryString = "from Comentario c inner join fetch c.pregunta p";
+      if (fetchUsuario) {
+        queryString += " left join fetch c.usuario u";
+      }
+      queryString += " where p.idPregunta=:idP";
+      Query query = session.createQuery(queryString);
+      query.setParameter("idP", pregunta.getIdPregunta());
+      comentariosObtenidos = (List<Comentario>) query.list();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return comentariosObtenidos;
+  }
+
   /**
    * Obtiene una lista de comentarios que responden
    *

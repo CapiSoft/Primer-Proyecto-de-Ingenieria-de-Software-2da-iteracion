@@ -78,6 +78,48 @@ public class PreguntaDAO {
   }
 
   /**
+   * Obtiene todas las preguntas
+   *
+   * @param fetchUsuario Bandera que indica si se debe cargar el usuario de cada
+   * pregunta
+   * @param fetchComentarios Bandera que indica si se deben cargar los
+   * comentarios de cada pregunta
+   *
+   * @return Una lista con todas las preguntas en la BD
+   */
+  public List<Pregunta> obtener(boolean fetchUsuario, boolean fetchComentarios) {
+    List<Pregunta> preguntasObtenidas = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = null;
+    try {
+      tx = session.beginTransaction();
+
+      String queryString = "from Pregunta p";
+      if (fetchUsuario) {
+        queryString += " join fetch p.usuario u";
+      }
+      if (fetchComentarios) {
+        queryString += " join fetch p.comentarios c";
+      }
+      queryString += " order by p.fechaPublicacion desc";
+
+      Query query = session.createQuery(queryString);
+      preguntasObtenidas = (List<Pregunta>) query.list();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+
+    return preguntasObtenidas;
+  }
+
+  /**
    * Obtiene una pregunta específica
    *
    * @param idPregunta El id de la pregunta que se quiere obtener
@@ -92,7 +134,52 @@ public class PreguntaDAO {
 
       String queryString = "from Pregunta p where p.idPregunta=:id";
       Query query = session.createQuery(queryString);
+      query.setParameter("id", idPregunta);
       preguntaObtenida = (Pregunta) query.uniqueResult();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return preguntaObtenida;
+  }
+
+  /**
+   * Obtiene una pregunta específica
+   *
+   * @param idPregunta El id de la pregunta que se quiere obtener
+   * @param fetchUsuario Bandera que indica si se debe cargar el usuario de la
+   * pregunta
+   * @param fetchComentarios Bandera que indica si se deben cargar los
+   * comentarios de la pregunta
+   *
+   * @return La pregunta identificada por el id, o null si no existe
+   */
+  public Pregunta obtener(int idPregunta, boolean fetchUsuario, boolean fetchComentarios) {
+    Pregunta preguntaObtenida = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = null;
+    try {
+      tx = session.beginTransaction();
+
+      String queryString = "from Pregunta p";
+      if (fetchUsuario) {
+        queryString += " inner join fetch p.usuario u";
+      }
+      if (fetchComentarios) {
+        queryString += " left join fetch p.comentarios c";
+      }
+      queryString += " where p.idPregunta=:id";
+
+      Query query = session.createQuery(queryString);
+
+      query.setParameter("id", idPregunta);
+      preguntaObtenida = (Pregunta) query.list().get(0);
 
       tx.commit();
     } catch (HibernateException e) {
