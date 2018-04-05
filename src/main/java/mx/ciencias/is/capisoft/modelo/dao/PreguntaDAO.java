@@ -231,7 +231,8 @@ public class PreguntaDAO {
     try {
       tx = session.beginTransaction();
 
-      String queryString = "from Pregunta p where (p.titulo like ?)"
+      String queryString = "from Pregunta p join fetch p.usuario u"
+              + " where (p.titulo like ?)"
               + " or (p.pregunta like ?) order by p.fechaPublicacion desc";
       Query query = session.createQuery(queryString);
       query.setString(0, "%" + contenido + "%");

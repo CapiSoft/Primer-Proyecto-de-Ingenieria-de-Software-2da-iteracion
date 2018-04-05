@@ -1,5 +1,5 @@
 package mx.ciencias.is.capisoft.modelo;
-// Generated Mar 23, 2018 10:36:35 AM by Hibernate Tools 4.3.1
+// Generated Apr 5, 2018 2:00:07 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,7 +13,7 @@ public class Comentario  implements java.io.Serializable {
 
 
      private int idComentario;
-     private Comentario responde;
+     private Comentario respuesta;
      private Pregunta pregunta;
      private Usuario usuario;
      private String comentario;
@@ -30,7 +30,7 @@ public class Comentario  implements java.io.Serializable {
     
     public Comentario(int idComentario, Comentario comentario, Pregunta pregunta, Usuario usuario, String comentario_1, Date fecha, Set comentarios) {
        this.idComentario = idComentario;
-       this.responde = comentario;
+       this.respuesta = comentario;
        this.pregunta = pregunta;
        this.usuario = usuario;
        this.comentario = comentario_1;
@@ -45,12 +45,12 @@ public class Comentario  implements java.io.Serializable {
     public void setIdComentario(int idComentario) {
         this.idComentario = idComentario;
     }
-    public Comentario getResponde() {
-        return this.responde;
+    public Comentario getRespuesta() {
+        return this.respuesta;
     }
     
-    public void setResponde(Comentario responde) {
-        this.responde = responde;
+    public void setRespuesta(Comentario respuesta) {
+        this.respuesta = respuesta;
     }
     public Pregunta getPregunta() {
         return this.pregunta;
