@@ -52,15 +52,28 @@
           </b:column>
           <b:column col-sm="2">
             <p:outputLabel value="#{comentario.usuario.nombreUsuario}"/>
+               
           </b:column>
-        </b:row>
+         </b:row>
+          <p:commandButton value="Editar" actionListener="#{actComentario.cambiaVista(true,comentario)}" update="coment"  rendered="#{actComentario.esUsuario(comentario)}" style="float: right;margin-right:10px"/>
         <p:separator/>
       </p:dataScroller>
-        <div id="coment" style="position:fixed; bottom:0; width: 85% ; padding-bottom:1em; align-content: center; ">
-            <h:form>
-                <p:inputText   value="#{crearComentario.texto}" size="100" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em"/>
-                <p:commandButton value="Comentar" actionListener="#{crearComentario.foo(leerPregunta.preguntaPedida)}" style="width:10%;  float: right;margin-right:10px" />
+        <div  style="position:fixed; bottom:0; width: 85% ; padding-bottom:1em; align-content: center; ">
+            
+            <h:form  id="coment" rendered="#{actComentario.comentar}">
+                <p:inputTextarea value="#{crearComentario.texto}" maxlength="5000" autoResize="false" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em"/>
+                
+                <p:commandButton value="Comentar" actionListener="#{crearComentario.comentar(leerPregunta.preguntaPedida)}" style="width:10%;  float: right;margin-right:10px" />
+                
             </h:form>
+            
+            <h:form id="panelActualiza" rendered="#{actComentario.editar}">
+                <p:inputTextarea value="#{actComentario.texto}" maxlength="5000" autoResize="false" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em">
+                    #{comentario.comentario}
+                </p:inputTextarea>
+                <p:commandButton value="Actualizar" actionListener="#{actComentario.actualizar()}"  style="width:10%;  float: right;margin-right:10px" />
+            </h:form>
+            
         </div>
     </b:container>
       

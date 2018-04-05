@@ -28,6 +28,14 @@ import mx.ciencias.is.capisoft.modelo.dao.UsuarioDAO;
 public class crearComentario{
     
     String texto;
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
     Pregunta pregunta;
     //Usuario usPregunta;//Usuario que esta haciendo la pregunta/comentario 
 
@@ -42,17 +50,14 @@ public class crearComentario{
     /*Usuario actual  que respondera a la pregunta/comentario*/
     Usuario us=new UsuarioDAO().obtener("a@gmail.com");
     
-    public void buttonAction(ActionEvent actionEvent) {
-     //  comentar();
-        
-    }
-  
+   
      
     /*Revisar si esta respondiendo a otro comentario, si no, comentario=null*/
     
     
     /**
      * Solo realiza comentarios a  preguntas
+     * @param preguntaa
      */
     public void comentar(Pregunta preguntaa){
         //PreguntaDAO aDAO=new PreguntaDAO();
@@ -64,7 +69,7 @@ public class crearComentario{
         Comentario com=new Comentario(0, null, pregunta, us, texto, fecha, null);
         ComentarioDAO comDAO=new ComentarioDAO();
         comDAO.crear(com);   
-        
+        texto="";
       
     }
     
@@ -73,6 +78,10 @@ public class crearComentario{
         rc.execute("comEmpty.show()");
     }
    
+    
+    public void foo(){
+        System.out.println("El texto guardado es: "+texto);
+    }
     
     public void foo(Pregunta preguntaa){
         this.setPregunta(preguntaa);
@@ -85,13 +94,7 @@ public class crearComentario{
         }
     }
     
-    public String getTexto(){
-        return texto;
-    }
-    
-    public void setTexto(String nwTe){
-        texto=nwTe;
-    }
+
     
     /*static public void main(String[]Args){
        
