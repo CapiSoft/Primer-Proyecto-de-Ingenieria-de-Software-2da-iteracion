@@ -70,14 +70,18 @@ public class actComentario {
     
     public void actualizar(){
         Date fecha= new Date();
-        Comentario comen=new Comentario(com.getIdComentario(), , ,, texto, fecha, null);
+        Comentario comen=new Comentario(com.getIdComentario(),null,com.getPregunta() ,com.getUsuario(), texto, fecha, null);
         ComentarioDAO comDAO=new ComentarioDAO();
-        comDAO.crear(com); 
-        
+        comDAO.crear(comen); 
+        cambiaVistaActualizar(false, null);
         
     }
     
-    public void cambiaVista(boolean mood,Comentario comentario){
+    public void fooActualizar(){
+        cambiaVistaActualizar(false, null);
+    }
+    
+    public void cambiaVistaActualizar(boolean mood,Comentario comentario){
         setCom(comentario);
         setComentar(!mood);
         setEditar(mood);
