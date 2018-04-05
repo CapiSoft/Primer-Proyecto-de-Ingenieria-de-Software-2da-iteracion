@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 23, 2018 10:36:37 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Apr 5, 2018 2:00:08 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
   <class name="mx.ciencias.is.capisoft.modelo.Pregunta" table="pregunta" schema="public" optimistic-lock="version">
     <id name="idPregunta" type="int">
       <column name="id_pregunta" />
-      <generator class="sequence" />
+      <generator class="identity" />
     </id>
     <many-to-one name="usuario" class="mx.ciencias.is.capisoft.modelo.Usuario" fetch="select">
       <column name="usuario" length="20" />

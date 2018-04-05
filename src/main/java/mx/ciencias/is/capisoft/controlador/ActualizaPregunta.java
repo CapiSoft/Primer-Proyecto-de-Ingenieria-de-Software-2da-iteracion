@@ -12,6 +12,7 @@ import mx.ciencias.is.capisoft.modelo.Pregunta;
 import mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO;
 //import mx.ciencias.is.capisoft.modelo.Usuario;
 //import mx.ciencias.is.capisoft.modelo.dao.UsuarioDAO;
+
 /**
  *
  * @author victor
@@ -19,37 +20,40 @@ import mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO;
 @ManagedBean
 @ViewScoped
 public class ActualizaPregunta {
-    private int id;
-    private Pregunta pregunta;
-    
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  private int id = -1;
+  private Pregunta pregunta;
 
-    public Pregunta getPregunta() {
-        return pregunta;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setPregunta(Pregunta pregunta) {
-        this.pregunta = pregunta;
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public Pregunta getPregunta() {
+    return pregunta;
+  }
+
+  public void setPregunta(Pregunta pregunta) {
+    this.pregunta = pregunta;
+  }
+
+  public String cargarId() {
+    if (id < 0) {
+      return "/index.xhtml?faces-redirect=true";
     }
-    
-    
-   public void cargarId(){
     pregunta = new PreguntaDAO().obtener(id);
-   }
-   
-   
-    public String actualizaPregunta(){
-        PreguntaDAO pd = new PreguntaDAO();
-        pd.actualizar(pregunta);
-        //Usuario nu = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("nombreUsuario");
-        
-        return "pregunta.xhtml?id="+id;
-    
-    }
+    return null;
+  }
+
+  public String actualizaPregunta() {
+    PreguntaDAO pd = new PreguntaDAO();
+    pd.actualizar(pregunta);
+    //Usuario nu = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("nombreUsuario");
+
+    return "pregunta.xhtml?id=" + id;
+
+  }
 }

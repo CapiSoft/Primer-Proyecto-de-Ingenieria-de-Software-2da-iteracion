@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 23, 2018 10:36:37 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Apr 5, 2018 2:00:08 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
   <class name="mx.ciencias.is.capisoft.modelo.Comentario" optimistic-lock="version" schema="public" table="comentario">
     <id name="idComentario" type="int">
       <column name="id_comentario"/>
-      <generator class="sequence"/>
+      <generator class="identity"/>
     </id>
-    <many-to-one class="mx.ciencias.is.capisoft.modelo.Comentario" fetch="select" name="responde">
+    <many-to-one class="mx.ciencias.is.capisoft.modelo.Comentario" fetch="select" name="respuesta">
       <column name="responde"/>
     </many-to-one>
     <many-to-one class="mx.ciencias.is.capisoft.modelo.Pregunta" fetch="select" name="pregunta">
