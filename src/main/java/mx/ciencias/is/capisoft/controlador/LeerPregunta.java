@@ -24,6 +24,15 @@ public class LeerPregunta implements Serializable {
 
   private Pregunta preguntaPedida = new Pregunta();
   private List<Comentario> comentariosPregunta;
+  private String busqueda;
+
+  public String getBusqueda() {
+    return busqueda;
+  }
+
+  public void setBusqueda(String busqueda) {
+    this.busqueda = busqueda;
+  }
 
   public List<Comentario> getComentariosPregunta() {
     return comentariosPregunta;
@@ -54,6 +63,15 @@ public class LeerPregunta implements Serializable {
     }
     preguntaPedida = new PreguntaDAO().obtener(id, true, false);
     comentariosPregunta = new ComentarioDAO().obtener(preguntaPedida, true);
+    return null;
+  }
+
+  public String enviaBusqueda() {
+    if (busqueda != null) {
+      if (!"".equals(busqueda.trim())) {
+        return "/busqueda.xhtml?query=" + busqueda + "&faces-redirect=true";
+      }
+    }
     return null;
   }
 

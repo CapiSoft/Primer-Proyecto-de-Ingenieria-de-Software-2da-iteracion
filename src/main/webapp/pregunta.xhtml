@@ -15,7 +15,10 @@
   <h:body>
     <p:menubar>
       <f:facet name="options">
-        <p:inputText placeholder="Buscar"></p:inputText>
+        <h:form>
+          <h:inputText value="#{leerPregunta.busqueda}"/>
+          <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
+        </h:form>
       </f:facet>
     </p:menubar>
     <b:container>
