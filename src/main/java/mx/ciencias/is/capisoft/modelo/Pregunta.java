@@ -1,5 +1,5 @@
 package mx.ciencias.is.capisoft.modelo;
-// Generated Mar 23, 2018 10:36:35 AM by Hibernate Tools 4.3.1
+// Generated Apr 5, 2018 2:00:07 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;

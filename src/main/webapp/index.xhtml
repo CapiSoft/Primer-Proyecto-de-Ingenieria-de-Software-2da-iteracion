@@ -33,7 +33,12 @@
               #{pregunta.pregunta}
             </p>
           </b:column>
-          <b:column col-sm="1" offset-sm="9">
+          <b:column col-sm="1">
+            <p:link style="color:blue;" value="Editar" outcome="actualizar">
+              <f:param name="id" value="#{pregunta.idPregunta}"/>
+            </p:link>
+          </b:column>
+          <b:column col-sm="1" offset-sm="8">
             Preguntado el <span>#{pregunta.fechaPublicacion}</span>
           </b:column>
           <b:column col-sm="2">
