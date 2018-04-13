@@ -5,6 +5,7 @@
  */
 package mx.ciencias.is.capisoft.controlador;
 
+import java.io.Serializable;
 import mx.ciencias.is.capisoft.modelo.Comentario;
 import mx.ciencias.is.capisoft.modelo.Pregunta;
 import mx.ciencias.is.capisoft.modelo.Usuario;
@@ -17,6 +18,8 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO;
 import mx.ciencias.is.capisoft.modelo.dao.UsuarioDAO;
 /**
@@ -24,8 +27,8 @@ import mx.ciencias.is.capisoft.modelo.dao.UsuarioDAO;
  * @author berna
  */
 @ManagedBean
-@SessionScoped
-public class crearComentario{
+@ViewScoped
+public class crearComentario implements Serializable{
     
     String texto;
 
@@ -48,34 +51,37 @@ public class crearComentario{
     }
     
     /*Usuario actual  que respondera a la pregunta/comentario*/
-    Usuario us=new UsuarioDAO().obtener("a@gmail.com");
+    Usuario us=new UsuarioDAO().obtener("acv629");
     
    
      
-    /*Revisar si esta respondiendo a otro comentario, si no, comentario=null*/
+    
     
     
     /**
      * Solo realiza comentarios a  preguntas
      * @param preguntaa
+     * @return 
      */
-    public void comentar(Pregunta preguntaa){
+    public String comentar(Pregunta preguntaa){
         //PreguntaDAO aDAO=new PreguntaDAO();
         
         this.setPregunta(preguntaa);
         Date fecha=new Date();    
-      
-        
-        Comentario com=new Comentario(0, null, pregunta, us, texto, fecha, null);
-        ComentarioDAO comDAO=new ComentarioDAO();
-        comDAO.crear(com);   
-        texto="";
-      
+      //context.getExternalContext().getSessionMap().get("user");
+        if(! getTexto().equals("")){
+            Comentario com=new Comentario(0, null, pregunta, us, texto, fecha, null);
+            ComentarioDAO comDAO=new ComentarioDAO();
+            comDAO.crear(com);   
+            setTexto("");
+            
+        }
+        return "pregunta?faces-redirect=true";
     }
     
     public void openDialog(){
         RequestContext rc=RequestContext.getCurrentInstance();
-        rc.execute("comEmpty.show()");
+        rc.execute("dlg2.show()");
     }
    
     
@@ -83,29 +89,14 @@ public class crearComentario{
         System.out.println("El texto guardado es: "+texto);
     }
     
-    public void foo(Pregunta preguntaa){
-        this.setPregunta(preguntaa);
-        Date fecha=new Date();
-        ComentarioDAO comDAO=new ComentarioDAO();
-        for(int i=2;i<5;i++){
-            Comentario com=new Comentario(i, null, pregunta, us, "Comentario num."+i, fecha, null);            
-            comDAO.crear(com);
-            System.out.println("#"+i+" Agregado");
-        }
-    }
+     public void execute() {
+         FacesContext context = FacesContext.getCurrentInstance();
+         
+        context.addMessage(null, new FacesMessage("Successful",  "Your message: " + getTexto()) );
+     }
     
 
     
-    /*static public void main(String[]Args){
-       
-        for(int i=0; i<=10;i++){
-             Date b =new Date();
-            Usuario a=new Usuario(""+i+"asdsdasdasda@gmail.com", ""+i+"nombre_adasasda", ""+i+"", "dsadasdasdasd", b, "Usuario", null, null);
-            UsuarioDAO aDAO=new UsuarioDAO();
-            aDAO.crear(a);
-            System.out.println("Listo "+1+" Usuario creado");
-        }
-    
-    }*/
+   
     
 }

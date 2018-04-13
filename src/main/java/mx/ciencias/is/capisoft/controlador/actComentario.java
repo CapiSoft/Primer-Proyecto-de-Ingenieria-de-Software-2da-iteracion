@@ -20,6 +20,7 @@ import org.primefaces.context.RequestContext;
  * @author berna
  */
 
+
 @ManagedBean
 @SessionScoped
 public class actComentario {
@@ -66,7 +67,8 @@ public class actComentario {
     public void setEditar(boolean editar) {
         this.editar = editar;
     }
-    
+          //context.getExternalContext().getSessionMap().get("user");
+
     
     public String actualizar(){
         
