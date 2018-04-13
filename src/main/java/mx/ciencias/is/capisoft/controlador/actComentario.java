@@ -68,23 +68,32 @@ public class actComentario {
     }
     
     
-    public void actualizar(){
-        Date fecha= new Date();
-        Comentario comen=new Comentario(com.getIdComentario(),null,com.getPregunta() ,com.getUsuario(), texto, fecha, null);
-        ComentarioDAO comDAO=new ComentarioDAO();
-        comDAO.crear(comen); 
-        cambiaVistaActualizar(false, null);
+    public String actualizar(){
         
+        if(!getTexto().equals("")){
+        Date fecha= new Date();
+        Comentario comen=new Comentario(com.getIdComentario(),null,com.getPregunta() ,com.getUsuario(), texto, com.getFecha(), null);
+        ComentarioDAO comDAO=new ComentarioDAO();
+        comDAO.actualizar(comen); 
+        cambiaVistaActualizar(false, null);
+        setTexto("");
+        }
+        
+        return "pregunta?faces-redirect=true";
     }
     
     public void fooActualizar(){
+        //System.out.println(texto);
         cambiaVistaActualizar(false, null);
+        texto="";
     }
     
-    public void cambiaVistaActualizar(boolean mood,Comentario comentario){
-        setCom(comentario);
+    public String cambiaVistaActualizar(boolean mood,Comentario comentarioo){
+        setCom(comentarioo);
         setComentar(!mood);
         setEditar(mood);
+        setTexto(comentarioo.getComentario());
+        return "pregunta?faces-redirect=true";
     }
     /**
      *  comparar si el comentario lo realizo el usuario que actualmente esta conectado, con el fin de darle la opcion de editar el comentario
