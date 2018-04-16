@@ -28,7 +28,7 @@ import mx.ciencias.is.capisoft.modelo.dao.UsuarioDAO;
  */
 @ManagedBean
 @ViewScoped
-public class crearComentario implements Serializable{
+public class CrearComentario implements Serializable{
     
     String texto;
 

@@ -23,7 +23,7 @@ import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @SessionScoped
-public class actComentario {
+public class ActualizarComentario {
     
     String texto;
     Comentario com;
@@ -31,7 +31,7 @@ public class actComentario {
     boolean editar;
 
     
-    public actComentario(){
+    public ActualizarComentario(){
         comentar=true;
         editar=false;
     }

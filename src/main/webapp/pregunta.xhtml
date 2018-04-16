@@ -66,7 +66,7 @@
                
           </b:column>
          </b:row>
-          <p:commandButton value="Editar"   action="#{actComentario.cambiaVistaActualizar(true,comentario)}" rendered="#{actComentario.esUsuario(comentario)}" update=":formActualiza" style="float: right;margin-right:10px"/>
+          <p:commandButton value="Editar"   action="#{actualizarComentario.cambiaVistaActualizar(true,comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}" update=":formActualiza" style="float: right;margin-right:10px"/>
               
           <p:separator/>
       </p:dataScroller>       
@@ -74,7 +74,7 @@
       
       <p:outputPanel id="coment" style=" display: block;position:fixed; bottom:0; width: 85% ; margin-left:6em;  padding-bottom:1em; align-content: center; ">
             
-            <h:form  id="formComent" rendered="#{actComentario.comentar}">
+            <h:form  id="formComent" rendered="#{actualizarComentario.comentar}">
                 
                 
                 <p:inputTextarea widgetVar="editorCom" value="#{crearComentario.texto}" maxlength="5000" autoResize="false" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em"/>
@@ -86,9 +86,9 @@
         
       
         
-            <h:form id="formActualiza" rendered="#{actComentario.editar}">
-                <p:inputTextarea value="#{actComentario.texto}" maxlength="5000" autoResize="false" placeholder="#{actComentario.texto}" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em"/>
-                <p:commandButton value="Actualizar" action="#{actComentario.actualizar()}" update=":comentScroll :formComent" style="width:10%;  float: right;margin-right:10px" />
+            <h:form id="formActualiza" rendered="#{actualizarComentario.editar}">
+                <p:inputTextarea value="#{actualizarComentario.texto}" maxlength="5000" autoResize="false" placeholder="#{actualizarComentario.texto}" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em"/>
+                <p:commandButton value="Actualizar" action="#{actualizarComentario.actualizar()}" update=":comentScroll :formComent" style="width:10%;  float: right;margin-right:10px" />
               
             </h:form>
       </p:outputPanel>
