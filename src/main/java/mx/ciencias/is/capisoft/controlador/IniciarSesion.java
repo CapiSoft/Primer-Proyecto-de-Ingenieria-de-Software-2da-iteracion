@@ -51,11 +51,16 @@ public class IniciarSesion {
             return "";
         } else {
             context.getExternalContext().getSessionMap().put("user", user);
+            //context.getExternalContext().getSessionMap().get("user");
             correo = null;
             password = null;
             return "index.xhtml";
             
         }
+    }
+    
+    public boolean isLogged (){
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user") != null;
     }
     
     public String salir() {
