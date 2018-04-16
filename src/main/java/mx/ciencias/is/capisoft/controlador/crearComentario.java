@@ -51,7 +51,7 @@ public class crearComentario implements Serializable{
     }
     
     /*Usuario actual  que respondera a la pregunta/comentario*/
-    Usuario us=new UsuarioDAO().obtener("acv629");
+    Usuario us= (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
     
    
      
@@ -68,7 +68,7 @@ public class crearComentario implements Serializable{
         
         this.setPregunta(preguntaa);
         Date fecha=new Date();    
-      //context.getExternalContext().getSessionMap().get("user");
+      //usuario us= context.getExternalContext().getSessionMap().get("user");
         if(! getTexto().equals("")){
             Comentario com=new Comentario(0, null, pregunta, us, texto, fecha, null);
             ComentarioDAO comDAO=new ComentarioDAO();
@@ -76,24 +76,10 @@ public class crearComentario implements Serializable{
             setTexto("");
             
         }
-        return "pregunta?faces-redirect=true";
+        return "pregunta?id="+preguntaa.getIdPregunta()+"&faces-redirect=true";
     }
     
-    public void openDialog(){
-        RequestContext rc=RequestContext.getCurrentInstance();
-        rc.execute("dlg2.show()");
-    }
-   
-    
-    public void foo(){
-        System.out.println("El texto guardado es: "+texto);
-    }
-    
-     public void execute() {
-         FacesContext context = FacesContext.getCurrentInstance();
-         
-        context.addMessage(null, new FacesMessage("Successful",  "Your message: " + getTexto()) );
-     }
+  
     
 
     
