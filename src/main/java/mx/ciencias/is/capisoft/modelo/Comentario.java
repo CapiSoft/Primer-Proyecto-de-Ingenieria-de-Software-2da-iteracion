@@ -27,6 +27,7 @@ public class Comentario  implements java.io.Serializable {
     public Comentario(int idComentario) {
         this.idComentario = idComentario;
     }
+    
     public Comentario(int idComentario, Comentario comentario, Pregunta pregunta, Usuario usuario, String comentario_1, Date fecha, Set comentarios) {
        this.idComentario = idComentario;
        this.respuesta = comentario;
