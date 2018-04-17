@@ -49,38 +49,43 @@
         </b:column>
       </b:row>
       <p:separator/>
+      <h:form id="fScroll">
+        <p:dataScroller id="comentScroll"   value="#{leerPregunta.comentariosPregunta}" chunkSize="10" var="comentario" style="padding-bottom:20em;">
 
-      <p:dataScroller id="comentScroll"   value="#{leerPregunta.comentariosPregunta}" chunkSize="10" var="comentario" style="padding-bottom:20em;">
+          <b:row>
+            <b:column col-sm="12" col-md="8" col-lg="8">
+              <p>
+                #{comentario.comentario}
+              </p>
+            </b:column>
+            <b:column col-sm="1">
+              <p:outputLabel value="#{comentario.fecha}"/>
+            </b:column>
+            <b:column col-sm="2">
+              <p:outputLabel value="#{comentario.usuario.nombreUsuario}"/>
 
-        <b:row>
-          <b:column col-sm="12" col-md="8" col-lg="10">
-            <p>
-              #{comentario.comentario}
-            </p>
-          </b:column>
-          <b:column col-sm="2">
-            <p:outputLabel value="#{comentario.fecha}"/>
-          </b:column>
-          <b:column col-sm="2">
-            <p:outputLabel value="#{comentario.usuario.nombreUsuario}"/>
+            </b:column>
+            <b:column col-sm="1">
+              <h:commandButton id="act#{comentario.idComentario}" value="Editar"   action="#{actualizarComentario.cambiaVistaActualizar(true,comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}" style="float: right;margin-right:10px">
+                <f:ajax render=":comentPanel :fAct :fCom"/>
+              </h:commandButton>
+            </b:column>
+          </b:row>
 
-          </b:column>
-        </b:row>
-        <p:commandButton value="Editar"   action="#{actualizarComentario.cambiaVistaActualizar(true,comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}" update=":formActualiza" style="float: right;margin-right:10px"/>
-
-        <p:separator/>
-      </p:dataScroller>
+          <p:separator/>
+        </p:dataScroller>
+      </h:form>
     </b:container>
 
-    <p:outputPanel rendered="#{iniciarSesion.isLogged()}" id="coment" style=" display: block;position:fixed; bottom:0; width: 85% ; margin-left:6em;  padding-bottom:1em; align-content: center; ">
-      <h:form rendered="#{not actualizarComentario.actualizando}">
+    <p:outputPanel rendered="#{iniciarSesion.isLogged()}" id="comentPanel" style=" display: block;position:fixed; bottom:0; width: 85% ; margin-left:6em;  padding-bottom:1em; align-content: center; ">
+      <h:form id="fCom" rendered="#{not actualizarComentario.actualizando}">
         <p:inputTextarea value="#{crearComentario.texto}" maxlength="5000" autoResize="false" placeholder="Comentario" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em" />
         <p:commandButton value="Comentar" action="#{crearComentario.crearComentario(leerPregunta.preguntaPedida)}"/>
       </h:form>
-      <h:form rendered="#{actualizarComentario.actualizando}">
+      <h:form id="fAct" rendered="#{actualizarComentario.actualizando}">
         Actualizando
-        <p:inputTextarea value="#{crearComentario.texto}" maxlength="5000" autoResize="false" placeholder="Comentario" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em" />
-        <p:commandButton value="Comentar" action="#{crearComecrearComentarioomentar(leerPregunta.preguntaPedida)}"/>
+        <p:inputTextarea value="#{actualizarComentario.texto}" maxlength="5000" autoResize="false" placeholder="Comentario" style="height: 100px; width: 90%; margin:0.5em 2em 0.5em 2em" />
+        <p:commandButton value="Actualizar" action="#{actualizarComentario.actualizar()}"/>
       </h:form>
     </p:outputPanel>
 

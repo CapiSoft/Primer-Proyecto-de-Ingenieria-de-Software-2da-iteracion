@@ -6,107 +6,104 @@
 package mx.ciencias.is.capisoft.controlador;
 
 import mx.ciencias.is.capisoft.modelo.Comentario;
-import mx.ciencias.is.capisoft.modelo.Pregunta;
 import mx.ciencias.is.capisoft.modelo.Usuario;
 import mx.ciencias.is.capisoft.modelo.dao.ComentarioDAO;
-//import org.primefaces.component.editor.Editor;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import java.util.Date;
-import javax.faces.event.ActionEvent;
-import org.primefaces.context.RequestContext;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
 /**
  *
  * @author berna
+ * @author acv629
  */
-
-
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ActualizarComentario {
-    
-    String texto;
-    Comentario com;
-    boolean comentar;
-    boolean editar;
 
-    
-    public ActualizarComentario(){
-        comentar=true;
-        editar=false;
-    }
+  private Comentario comentario;
+  private String texto;
+  private boolean comentar;
+  private boolean actualizando;
+  private Usuario usuario;
 
-    public Comentario getCom() {
-        return com;
-    }
+  public Comentario getComentario() {
+    return comentario;
+  }
 
-    public void setCom(Comentario com) {
-        this.com = com;
-    }
-    
-    public String getTexto() {
-        return texto;
-    }
+  public void setComentario(Comentario comentario) {
+    this.comentario = comentario;
+  }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
+  public String getTexto() {
+    return texto;
+  }
 
-    public boolean isComentar() {
-        return comentar;
-    }
+  public void setTexto(String texto) {
+    this.texto = texto;
+  }
 
-    public void setComentar(boolean comentar) {
-        this.comentar = comentar;
-    }
+  public boolean isComentar() {
+    return comentar;
+  }
 
-    public boolean isEditar() {
-        return editar;
-    }
+  public void setComentar(boolean comentar) {
+    this.comentar = comentar;
+  }
 
-    public void setEditar(boolean editar) {
-        this.editar = editar;
-    }
-          //context.getExternalContext().getSessionMap().get("user");
+  public boolean isActualizando() {
+    return actualizando;
+  }
 
-    
-    public String actualizar(){
-        
-        if(!getTexto().equals("")){
-            
-            Date fecha= new Date();
-            Comentario comen=new Comentario(com.getIdComentario(),null,com.getPregunta() ,com.getUsuario(), texto, com.getFecha(), null);
-            ComentarioDAO comDAO=new ComentarioDAO();
-            comDAO.actualizar(comen); 
-            cambiaVistaActualizar(false, null);
-            setTexto("");
-        }
-        
-        return "pregunta?id="+com.getPregunta().getIdPregunta()+"&faces-redirect=true";
-    }
-    
-    public void fooActualizar(){
-        //System.out.println(texto);
-        cambiaVistaActualizar(false, null);
-        texto="";
-    }
-    
-    public String cambiaVistaActualizar(boolean mood,Comentario comentarioo){
-        setCom(comentarioo);
-        setComentar(!mood);
-        setEditar(mood);
-        setTexto(comentarioo.getComentario());
-        return "pregunta?id="+comentarioo.getPregunta().getIdPregunta()+"&faces-redirect=true";
+  public void setActualizando(boolean actualizando) {
+    this.actualizando = actualizando;
+  }
 
+  public String actualizar() {
+
+    if (!"".equals(this.texto)) {
+
+      this.comentario.setComentario(texto);
+      ComentarioDAO comDAO = new ComentarioDAO();
+      comDAO.actualizar(this.comentario);
+      return "pregunta?id=" + this.comentario.getPregunta().getIdPregunta() + "&faces-redirect=true";
     }
-    /**
-     *  comparar si el comentario lo realizo el usuario que actualmente esta conectado, con el fin de darle la opcion de editar el comentario
-     * @param comentario
-     * @return 
-     */
-    public boolean esUsuario(Comentario comentario){
-        
-        return true;
+    return null;
+  }
+
+  public void fooActualizar() {
+    //System.out.println(texto);
+    cambiaVistaActualizar(false, null);
+    texto = "";
+  }
+
+  public void cambiaVistaActualizar(boolean actualizar, Comentario comentario) {
+    this.comentario = comentario;
+    this.actualizando = actualizar;
+    this.comentar = !actualizar;
+    if (comentario != null) {
+      this.texto = comentario.getComentario();
     }
-    
+  }
+
+  /**
+   * comparar si el comentario lo realizo el usuario que actualmente esta
+   * conectado, con el fin de darle la opcion de editar el comentario
+   *
+   * @param comentario
+   * @return
+   */
+  public boolean esUsuario(Comentario comentario) {
+    return this.usuario != null && comentario != null && comentario.getUsuario().getCorreo().equals(this.usuario.getCorreo());
+  }
+
+  @PostConstruct
+  public void init() {
+    this.usuario = (Usuario) FacesContext.getCurrentInstance()
+            .getExternalContext().getSessionMap().get("user");
+    this.actualizando = false;
+    this.texto = "";
+  }
+
 }

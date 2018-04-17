@@ -94,7 +94,8 @@ public class ComentarioDAO {
     try {
       tx = session.beginTransaction();
 
-      String queryString = "from Comentario c where c.pregunta.idPregunta=:idP";
+      String queryString = "from Comentario c where c.pregunta.idPregunta=:idP"
+              + " order by c.fecha desc";
       Query query = session.createQuery(queryString);
       query.setParameter("idP", pregunta.getIdPregunta());
       comentariosObtenidos = (List<Comentario>) query.list();
@@ -122,7 +123,7 @@ public class ComentarioDAO {
       if (fetchUsuario) {
         queryString += " left join fetch c.usuario u";
       }
-      queryString += " where p.idPregunta=:idP";
+      queryString += " where p.idPregunta=:idP order by c.fecha desc";
       Query query = session.createQuery(queryString);
       query.setParameter("idP", pregunta.getIdPregunta());
       comentariosObtenidos = (List<Comentario>) query.list();

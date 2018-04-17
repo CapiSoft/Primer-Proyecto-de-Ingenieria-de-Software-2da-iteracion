@@ -7,6 +7,9 @@
 + Apache Tomcat 8
 
 ### Instalación
-+ Cargar la base en PostgreSQL del archivo capisoft.backup
++ Cargar la base en PostgreSQL del archivo capisoft.backup:
+  - Crear un usuario llamado 'capisoft', con contraseña 'capisoft1234'
+  - Crear una base llamada 'capisoft', con dueño 'capisoft'
+  - Correr en la terminal 'postgres# psql -U capisoft capisoft < capisoft.backup'
 + Abrir el proyecto en Netbeans y compilar
 
