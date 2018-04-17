@@ -17,18 +17,26 @@
           <h:inputText value="#{leerPregunta.busqueda}"/>
           <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
           <c:choose>
-            <c:when test="#{iniciarSesion.isLogged()}">
+            <c:when test="#{iniciarSesion.logged}">
               <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
             </c:when>
             <c:otherwise>
-              <h:link outcome="registrar.xhtml" value="Registrar  "/>
-              <h:link outcome="iniciar.xhtml" value="  Iniciar Sesión"/>
+              <h:link outcome="registrar.xhtml?faces-redirect=true" value="Registrar  "/>
+              <h:link outcome="iniciar.xhtml?faces-redirect=true" value="  Iniciar Sesión"/>
             </c:otherwise>
           </c:choose>
         </h:form>
       </f:facet>
     </p:menubar>
     <b:container>
+      <b:row  rendered="#{iniciarSesion.logged}">
+        <b:column col-sm="6">
+          <h2>¿Tienes algo que preguntar?</h2>
+        </b:column>
+        <b:column col-sm="12" col-md="6">
+          <h2><h:link value="Crea una nueva pregunta" outcome="crear.xhtml"/></h2>
+        </b:column>
+      </b:row>
       <p:dataScroller value="#{leerPregunta.listarPreguntas()}" var="pregunta" chunkSize="10">
         <b:row>
           <b:column col-sm="12">

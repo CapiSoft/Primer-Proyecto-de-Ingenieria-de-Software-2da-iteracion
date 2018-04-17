@@ -19,38 +19,69 @@
           <h:inputText value="#{leerPregunta.busqueda}"/>
           <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
           <c:choose>
-            <c:when test="#{iniciarSesion.isLogged()}">
+            <c:when test="#{iniciarSesion.logged}">
               <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
             </c:when>
             <c:otherwise>
-              <h:link outcome="registrar.xhtml" value="Registrar  "/>
-              <h:link outcome="iniciar.xhtml" value="  Iniciar Sesión"/>
+              <h:link outcome="registrar.xhtml?faces-redirect=true" value="Registrar  "/>
+              <h:link outcome="iniciar.xhtml?faces-redirect=true" value="  Iniciar Sesión"/>
             </c:otherwise>
           </c:choose>
         </h:form>
       </f:facet>
     </p:menubar>
     <b:container>
-      <center>
-        <h:form>
-          <p:messages id="messages" showDetail="true" autoUpdate="true" />
-          <h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+      <h1>Nuevo Registro</h1>
+      <br/>
+      <h:form id="formRegistro">
+        <b:row>
+          <b:column col-sm="12">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" />
+          </b:column>
+        </b:row>
+        <b:row>
+          <b:column col-sm="12" col-md="3" offset-md="3">
             <h:outputLabel for="name" value="Nombre de usuario: *" />
-            <p:inputText id="name" value="#{registrar.nombre}" required="true" />
-
+          </b:column>
+          <b:column col-sm="12" col-md="6">
+            <p:inputText maxlength="20" id="name" value="#{registrar.nombre}" required="true" label="Nombre de usuario" />
+          </b:column>
+        </b:row>
+        <b:row>
+          <b:column col-sm="12" col-md="3" offset-md="3">
             <h:outputLabel for="mail" value="Correo: *" />
-            <p:inputText id="mail" value="#{registrar.correo}" required="true" />
-
+          </b:column>
+          <b:column col-sm="12" col-md="6">
+            <p:inputText maxlength="20" id="mail" value="#{registrar.correo}" required="true" label="Correo"/>@ciencias.unam.mx
+          </b:column>
+        </b:row>
+        <b:row>
+          <b:column col-sm="12" col-md="3" offset-md="3">
             <h:outputLabel for="pwd1" value="Contraseña: *" />
+          </b:column>
+          <b:column col-sm="12" col-md="6">
             <p:password id="pwd1" value="#{registrar.password1}" match="pwd2" label="Contraseña" required="true" />
-
+          </b:column>
+        </b:row>
+        <b:row>
+          <b:column col-sm="12" col-md="3" offset-md="3">
             <h:outputLabel for="pwd2" value="Confirmar Contraseña: *" />
+          </b:column>
+          <b:column col-sm="12" col-md="6">
             <p:password id="pwd2" value="#{registrar.password1}" label="Confirmar Contraseña" required="true" />
-          </h:panelGrid>
-          <b:link outcome="index.xhtml" value="Cancelar   "/>
-          <p:commandButton update="matchGrid" value="Save" action="#{registrar.registrar()}"/>
-        </h:form>
-      </center>
+          </b:column>
+        </b:row>
+        <br/>
+        <b:row>
+          <b:column col-sm="1" offset-sm="5">
+            <b:link outcome="index.xhtml" value="Cancelar   "/>
+          </b:column>
+          <b:column col-sm="1">
+            <p:commandButton update="formRegistro" value="Registrarse" action="#{registrar.registrar()}"/>
+          </b:column>
+        </b:row>
+      </h:form>
+
     </b:container>
   </h:body>
 </html>

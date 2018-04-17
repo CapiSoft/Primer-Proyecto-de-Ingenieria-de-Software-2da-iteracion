@@ -4,13 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-  <f:metadata>
-    <f:viewParam name="query" value="#{buscarContenido.contenidoABuscar}"/>
-  </f:metadata>
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
   <h:head>
-    <title>Mis trámites ciencias - Iniciar Sesion</title>
+    <title>Facelet Title</title>
   </h:head>
   <h:body>
     <p:menubar>
@@ -31,41 +28,43 @@
       </f:facet>
     </p:menubar>
     <b:container>
-      <h1>Iniciar Sesión</h1>
+      <h1>Nueva Pregunta</h1>
       <br/>
-
-      <h:form id="formInicia">
+      <h:form id="formPregunta">
         <b:row>
           <b:column col-sm="12">
             <p:messages id="messages" showDetail="true" autoUpdate="true" />
           </b:column>
         </b:row>
         <b:row>
-          <b:column col-sm="12" col-md="3" offset-md="3">
-            <h:outputLabel for="mail" value="Correo: *" />
+          <b:column col-sm="12" col-md="2">
+            <h:outputLabel for="tituloPregunta" value="Título:*" />
           </b:column>
-          <b:column col-sm="12" col-md="6">
-            <p:inputText maxlength="20" id="mail" value="#{iniciarSesion.correo}" required="true" label="Correo" />@ciencias.unam.mx
-          </b:column>
-        </b:row>
-        <b:row>
-          <b:column col-sm="12" col-md="3" offset-md="3">
-            <h:outputLabel for="pwd1" value="Contraseña: *" />
-          </b:column>
-          <b:column col-sm="12" col-md="6">
-            <p:password id="pwd1" value="#{iniciarSesion.password}" label="Contraseña" required="true" />
+          <b:column col-sm="12" col-md="10">
+            <p:inputText style="width:inherit;" maxlength="100" id="tituloPregunta" value="#{crearPregunta.titulo}" required="true" label="Título"/>
           </b:column>
         </b:row>
+        <br/>
         <b:row>
-          <b:column col-sm="1" offset-sm="6">
-            <b:link outcome="index.xhtml" value="Cancelar"/>
+          <b:column col-sm="12" col-md="2">
+            <h:outputLabel for="contenidoPregunta" value="Pregunta:*"/>
+          </b:column>
+          <b:column col-sm="12" col-md="10">
+            <p:inputTextarea autoResize="false" maxlength="5000" id="contenidoPregunta" value="#{crearPregunta.pregunta}" required="true"
+                             label="Pregunta" rows="5" style="width: inherit;"/>
+          </b:column>
+        </b:row>
+        <br/>
+        <b:row>
+          <b:column col-sm="1" offset-sm="8">
+            <b:link outcome="index.xhtml" value="Cancelar   "/>
           </b:column>
           <b:column col-sm="1">
-            <p:commandButton update="formInicia" value="Iniciar Sesión" action="#{iniciarSesion.login()}"/>
+            <p:commandButton update="formPregunta" value="Crear Pregunta" action="#{crearPregunta.creaPregunta()}"/>
           </b:column>
         </b:row>
       </h:form>
-
     </b:container>
   </h:body>
 </html>
+

@@ -5,8 +5,15 @@
  */
 package mx.ciencias.is.capisoft.controlador;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 //import javax.faces.context.FacesContext;
 import mx.ciencias.is.capisoft.modelo.Pregunta;
 import mx.ciencias.is.capisoft.modelo.Usuario;
@@ -22,10 +29,11 @@ import mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO;
 @ManagedBean
 //Etiqueta para que viva este bean hasta que se cambie de pagina
 @ViewScoped
-public class CreaPregunta {
+public class CrearPregunta {
 
   private String titulo;
   private String pregunta;
+  private Usuario usuario;
 
   public String getTitulo() {
     return titulo;
@@ -48,15 +56,26 @@ public class CreaPregunta {
     p.setIdPregunta(0);
     p.setTitulo(titulo);
     p.setPregunta(pregunta);
-    p.getUsuario();
-    p.getComentarios();
-    p.getFechaPublicacion();
+    p.setUsuario(usuario);
+    p.setComentarios(null);
+    p.setFechaPublicacion(new Date());
     PreguntaDAO pd = new PreguntaDAO();
     pd.crear(p);
-    //int id = pd.obtener();
-    //Usuario nu = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("nombreUsuario");
+    int id = p.getIdPregunta();
 
-    //return "pregunta.xhtml?=id"+id;
-    return "index";
+    return "/pregunta.xhtml?id=" + id + "&faces-redirect=true";
+  }
+
+  @PostConstruct
+  public void init() {
+    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    usuario = (Usuario) externalContext.getSessionMap().get("user");
+    if (usuario == null) {
+      try {
+        externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+      } catch (IOException ex) {
+        Logger.getLogger(CrearPregunta.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
   }
 }
