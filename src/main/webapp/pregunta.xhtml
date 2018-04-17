@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
   <f:metadata >
     <f:viewParam id="var" name="id" value="#{leerPregunta.preguntaPedida.idPregunta}"/>
     <f:viewAction action="#{leerPregunta.mostrarPregunta()}"/>
@@ -20,6 +21,15 @@
         <h:form>
           <h:inputText value="#{leerPregunta.busqueda}"/>
           <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
+          <c:choose>
+            <c:when test="#{iniciarSesion.isLogged()}">
+              <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
+            </c:when>
+            <c:otherwise>
+              <h:link outcome="registrar.xhtml" value="Registrar  "/>
+              <h:link outcome="iniciar.xhtml" value="  Iniciar Sesión"/>
+            </c:otherwise>
+          </c:choose>
         </h:form>
       </f:facet>
     </p:menubar>

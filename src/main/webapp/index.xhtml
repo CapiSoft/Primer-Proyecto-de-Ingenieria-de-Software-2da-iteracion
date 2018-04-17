@@ -16,19 +16,16 @@
         <h:form>
           <h:inputText value="#{leerPregunta.busqueda}"/>
           <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
-            <c:choose>
-              <c:when test="#{iniciarSesion.isLogged()}">
-                    <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
-              </c:when>
-              <c:otherwise>
-                    <h:link outcome="registrar.xhtml" value="Registrar  "/>
-                    <h:link outcome="iniciar.xhtml" value="  Iniciar Sesión"/>
-              </c:otherwise>
-            </c:choose>
+          <c:choose>
+            <c:when test="#{iniciarSesion.isLogged()}">
+              <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
+            </c:when>
+            <c:otherwise>
+              <h:link outcome="registrar.xhtml" value="Registrar  "/>
+              <h:link outcome="iniciar.xhtml" value="  Iniciar Sesión"/>
+            </c:otherwise>
+          </c:choose>
         </h:form>
-            
-              
-           
       </f:facet>
     </p:menubar>
     <b:container>

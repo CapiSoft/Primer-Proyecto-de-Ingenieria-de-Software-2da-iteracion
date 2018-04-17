@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
   <f:metadata>
     <f:viewParam name="query" value="#{buscarContenido.contenidoABuscar}"/>
   </f:metadata>
@@ -17,15 +18,23 @@
         <h:form>
           <h:inputText value="#{leerPregunta.busqueda}"/>
           <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
-          <h:link outcome="registrar.xhtml" value="Registrar"/>
+          <c:choose>
+            <c:when test="#{iniciarSesion.isLogged()}">
+              <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
+            </c:when>
+            <c:otherwise>
+              <h:link outcome="registrar.xhtml" value="Registrar  "/>
+              <h:link outcome="iniciar.xhtml" value="  Iniciar Sesión"/>
+            </c:otherwise>
+          </c:choose>
         </h:form>
       </f:facet>
     </p:menubar>
     <b:container>
-    <center>
+      <center>
         <h:form>
-        <p:messages id="messages" showDetail="true" autoUpdate="true" />
-        <h:panelGrid columns="2" id="matchGrid" cellpadding="5">  
+          <p:messages id="messages" showDetail="true" autoUpdate="true" />
+          <h:panelGrid columns="2" id="matchGrid" cellpadding="5">
             <h:outputLabel for="name" value="Nombre de usuario: *" />
             <p:inputText id="name" value="#{registrar.nombre}" required="true" />
 
@@ -37,11 +46,11 @@
 
             <h:outputLabel for="pwd2" value="Confirmar Contraseña: *" />
             <p:password id="pwd2" value="#{registrar.password1}" label="Confirmar Contraseña" required="true" />
-        </h:panelGrid>
-            <b:link outcome="index.xhtml" value="Cancelar   "/> 
-        <p:commandButton update="matchGrid" value="Save" action="#{registrar.registrar()}"/>
+          </h:panelGrid>
+          <b:link outcome="index.xhtml" value="Cancelar   "/>
+          <p:commandButton update="matchGrid" value="Save" action="#{registrar.registrar()}"/>
         </h:form>
-    </center> 
+      </center>
     </b:container>
   </h:body>
 </html>
