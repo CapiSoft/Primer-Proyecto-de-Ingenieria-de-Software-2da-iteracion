@@ -50,6 +50,32 @@ public class ComentarioDAO {
   }
 
   /**
+   * Dado un comentario lo borra de la  BD
+   * @param c 
+   */
+  public void elimina(Comentario c){
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+           tx = session.beginTransaction();
+         
+           session.delete(c);
+           
+           tx.commit();
+        }
+        catch (HibernateException e) {
+           if (tx!=null){ 
+               tx.rollback();
+           }
+           e.printStackTrace(); 
+        }finally {
+           session.close();
+        }
+    
+    }
+  
+  
+  /**
    * Obtiene un comentario
    *
    * @param id El identificador del comentario que se desea obtener
