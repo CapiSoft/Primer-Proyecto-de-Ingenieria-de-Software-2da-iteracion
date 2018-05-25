@@ -251,4 +251,29 @@ public class PreguntaDAO {
     return preguntasObtenidas;
   }
 
+  /**
+   * Elimina una pregunta de la BD
+   *
+   * @param idPregunta El id de la pregunta que se desea borrar
+   */
+  public void eliminar(int idPregunta) {
+    Pregunta p = this.obtener(idPregunta, true, true);
+    Session session = sessionFactory.openSession();
+    Transaction tx = null;
+    try {
+      tx = session.beginTransaction();
+
+      session.delete(p);
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+  }
+
 }
