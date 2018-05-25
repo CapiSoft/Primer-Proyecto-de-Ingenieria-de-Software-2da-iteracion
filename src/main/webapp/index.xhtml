@@ -18,6 +18,7 @@
           <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
           <c:choose>
             <c:when test="#{iniciarSesion.logged}">
+              <h:link outcome="eliminar.xhtml?faces-redirect=true" value="Eliminar Usuario" rendered="#{leerPregunta.admin}"/>
               <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
             </c:when>
             <c:otherwise>
@@ -47,7 +48,7 @@
             </h4>
             <h4>
               <h:form>
-                <h:commandButton value="Eliminar" rendered="#{eliminarPregunta.puedeEliminar(pregunta)}" action="#{eliminarPregunta.eliminar(idPregunta)}"/>
+                <h:commandButton value="Eliminar" rendered="#{eliminarPregunta.puedeEliminar(pregunta)}" action="#{eliminarPregunta.eliminar(pregunta.idPregunta)}"/>
               </h:form>
             </h4>
           </b:column>
@@ -57,7 +58,7 @@
             </p>
           </b:column>
           <b:column col-sm="1">
-            <p:link style="color:blue;" value="Editar" outcome="actualizar">
+            <p:link style="color:blue;" value="Editar" outcome="actualizar" rendered="#{leerPregunta.puedeActualizar(pregunta)}">
               <f:param name="id" value="#{pregunta.idPregunta}"/>
             </p:link>
           </b:column>

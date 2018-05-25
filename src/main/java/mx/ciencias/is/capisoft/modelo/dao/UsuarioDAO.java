@@ -107,7 +107,26 @@ public class UsuarioDAO {
     }
   }
 
-    public Usuario encuentra(String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Usuario encuentra(String username, String password) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  public void elimina(Usuario u) {
+    Session session = sessionFactory.openSession();
+    Transaction tx = null;
+    try {
+      tx = session.beginTransaction();
+
+      session.delete(u);
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
+  }
 }

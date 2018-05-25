@@ -50,10 +50,10 @@ public class ActualizaPregunta {
 
   public String actualizaPregunta() {
     PreguntaDAO pd = new PreguntaDAO();
-    pd.actualizar(pregunta);
-    //Usuario nu = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("nombreUsuario");
 
-    return "pregunta.xhtml?id=" + id;
+    pd.actualizar(pregunta);
+
+    return "pregunta.xhtml?id=" + id + "&faces-redirect=true";
 
   }
 }
