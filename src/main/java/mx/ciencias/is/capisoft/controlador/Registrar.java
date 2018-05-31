@@ -105,7 +105,8 @@ public class Registrar {
 
         mensaje.setContent("Confirmacion de Registro: <br>"
                 + "Te damos la bienvenida a Mis Trámites Ciencias. <br>"
-                + "Esperamos que te la pases bien. <br>", "text/html");
+                + "Esperamos que te la pases bien. <br>"
+                + "Haz click <a href='http://localhost:8084/MisTramitesCiencias/index.xhtml'>aqui</a> para ingresar", "text/html");
         // Enviamos el correo
         Transport t = sesion.getTransport("smtp");
         t.connect(user, pass);
