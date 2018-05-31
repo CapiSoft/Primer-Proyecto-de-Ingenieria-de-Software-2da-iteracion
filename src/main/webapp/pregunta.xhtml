@@ -76,9 +76,24 @@
 
             </b:column>
             <b:column col-sm="1">
-               <h:commandButton id="elim#{comentario.idComentario}" value="Eliminar"   action="#{eliminarComentario.eliminar(comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}" style="float: right;margin-right:10px">
-                <f:ajax render=":fScroll"/>
+                
+                <p:growl id="message" showDetail="true" />
+
+                <p:commandButton value="Eliminar" update="message">
+                    <p:confirm  message="¿Seguro que quieres eliminar comentario?" icon="ui-icon-alert" />
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton id="elim#{comentario.idComentario}" value="Yes" type="button" action="#{eliminarComentario.eliminar(comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+                        <f:ajax render=":fScroll"/>
+                    </p:commandButton>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog> 
+               <!--<h:commandButton id="elim#{comentario.idComentario}" value="Eliminar"   action="#{eliminarComentario.eliminar(comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}" style="float: right;margin-right:10px">
+                    <f:ajax render=":fScroll"/>
               </h:commandButton> 
+                -->
+                
               <h:commandButton id="act#{comentario.idComentario}" value="Editar"   action="#{actualizarComentario.cambiaVistaActualizar(true,comentario)}" rendered="#{actualizarComentario.esUsuario(comentario)}" style="float: right;margin-right:10px">
                 <f:ajax render=":comentPanel :fAct :fCom"/>
               </h:commandButton>
