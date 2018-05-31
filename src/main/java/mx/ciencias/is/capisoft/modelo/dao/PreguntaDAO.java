@@ -8,6 +8,7 @@ package mx.ciencias.is.capisoft.modelo.dao;
 import java.util.List;
 import mx.ciencias.is.capisoft.modelo.HibernateUtil;
 import mx.ciencias.is.capisoft.modelo.Pregunta;
+import mx.ciencias.is.capisoft.modelo.Usuario;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -274,6 +275,34 @@ public class PreguntaDAO {
     } finally {
       session.close();
     }
+  }
+
+  public List<Pregunta> obtener(Usuario u) {
+    List<Pregunta> preguntasObtenidas = null;
+    Session session = sessionFactory.openSession();
+    Transaction tx = null;
+    try {
+      tx = session.beginTransaction();
+
+      String queryString = "from Pregunta p";
+      queryString += " inner join fetch p.usuario u";
+      queryString += " where p.usuario.correo=:correo";
+
+      Query query = session.createQuery(queryString);
+
+      query.setParameter("correo", u.getCorreo());
+      preguntasObtenidas = (List<Pregunta>) query.list();
+
+      tx.commit();
+    } catch (HibernateException e) {
+      if (tx != null) {
+        tx.rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+    return preguntasObtenidas;
   }
 
 }

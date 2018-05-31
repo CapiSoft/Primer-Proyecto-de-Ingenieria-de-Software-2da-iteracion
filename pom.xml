@@ -15,6 +15,12 @@
   </properties>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.5.5</version>
+    </dependency>
     <dependency>
       <groupId>net.bootsfaces</groupId>
       <artifactId>bootsfaces</artifactId>
@@ -23,9 +29,9 @@
     </dependency>
 
     <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.10</version>
+      <groupId>org.primefaces.themes</groupId>
+      <artifactId>all-themes</artifactId>
+      <version>1.0.10</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>

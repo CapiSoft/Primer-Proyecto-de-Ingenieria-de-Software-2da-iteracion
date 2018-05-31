@@ -26,7 +26,8 @@ public class EliminarPregunta {
     return usuario != null && (usuario.getRol().equals("admin") || p.getUsuario().getCorreo().equals(usuario.getCorreo()));
   }
 
-  public void eliminar(int idPregunta) {
+  public String eliminar(int idPregunta) {
     new PreguntaDAO().eliminar(idPregunta);
+    return "/index.xhtml?faces-redirect=true";
   }
 }

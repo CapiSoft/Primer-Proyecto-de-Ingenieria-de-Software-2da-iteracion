@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+  <h:head>
+    <title>Mis Trámites Ciencias</title>
+  </h:head>
+  <h:body>
+    <p:menubar>
+      <f:facet name="options">
+        <h:form>
+          <h:inputText value="#{leerPregunta.busqueda}"/>
+          <h:commandButton action="#{leerPregunta.enviaBusqueda()}" value="Buscar"/>
+          <c:choose>
+            <c:when test="#{iniciarSesion.logged}">
+              <h:commandButton action="#{iniciarSesion.salir()}" value="Salir"/>
+            </c:when>
+            <c:otherwise>
+              <h:link outcome="registrar.xhtml?faces-redirect=true" value="Registrar  "/>
+              <h:link outcome="iniciar.xhtml?faces-redirect=true" value="  Iniciar Sesión"/>
+            </c:otherwise>
+          </c:choose>
+        </h:form>
+      </f:facet>
+    </p:menubar>
+    <b:container>
+      <h:form>
+        Correo del usuario a eliminar: <h:inputText required="true" value="#{eliminarUsuario.correo}"/>@ciencias.unam.mx<br/>
+        <h:commandButton action="#{eliminarUsuario.eliminar()}" value="Eliminar Usuario"/>
+      </h:form>
+    </b:container>
+  </h:body>
+</html>
+

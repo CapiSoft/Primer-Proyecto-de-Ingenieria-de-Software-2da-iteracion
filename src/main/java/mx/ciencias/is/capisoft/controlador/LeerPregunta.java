@@ -9,8 +9,11 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import mx.ciencias.is.capisoft.modelo.Comentario;
 import mx.ciencias.is.capisoft.modelo.Pregunta;
+import mx.ciencias.is.capisoft.modelo.Usuario;
 import mx.ciencias.is.capisoft.modelo.dao.ComentarioDAO;
 import mx.ciencias.is.capisoft.modelo.dao.PreguntaDAO;
 
@@ -25,6 +28,11 @@ public class LeerPregunta implements Serializable {
   private Pregunta preguntaPedida = new Pregunta();
   private List<Comentario> comentariosPregunta;
   private String busqueda;
+  private Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+
+  public boolean isAdmin() {
+    return usuario != null && usuario.getRol().trim().equals("admin");
+  }
 
   public String getBusqueda() {
     return busqueda;
@@ -73,6 +81,10 @@ public class LeerPregunta implements Serializable {
       }
     }
     return null;
+  }
+
+  public boolean puedeActualizar(Pregunta p) {
+    return usuario != null && (usuario.getRol().trim().equals("admin") || usuario.getCorreo().equals(p.getUsuario().getCorreo()));
   }
 
 }

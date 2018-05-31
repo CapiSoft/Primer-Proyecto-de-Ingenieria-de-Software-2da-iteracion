@@ -3245,7 +3245,8 @@ ALTER TABLE ONLY public.usuario
 --
 
 ALTER TABLE ONLY public.comentario
-    ADD CONSTRAINT fk_com_pregunta FOREIGN KEY (pregunta) REFERENCES public.pregunta(id_pregunta);
+    ADD CONSTRAINT fk_com_pregunta FOREIGN KEY (pregunta) REFERENCES public.pregunta(id_pregunta)
+	ON DELETE CASCADE;
 
 
 --
@@ -3254,7 +3255,8 @@ ALTER TABLE ONLY public.comentario
 --
 
 ALTER TABLE ONLY public.comentario
-    ADD CONSTRAINT fk_com_resp FOREIGN KEY (responde) REFERENCES public.comentario(id_comentario);
+    ADD CONSTRAINT fk_com_resp FOREIGN KEY (responde) REFERENCES public.comentario(id_comentario)
+	ON DELETE CASCADE;
 
 
 --
@@ -3263,7 +3265,8 @@ ALTER TABLE ONLY public.comentario
 --
 
 ALTER TABLE ONLY public.comentario
-    ADD CONSTRAINT fk_com_usuario FOREIGN KEY (usuario) REFERENCES public.usuario(correo);
+    ADD CONSTRAINT fk_com_usuario FOREIGN KEY (usuario) REFERENCES public.usuario(correo)
+	ON DELETE CASCADE;
 
 
 --
@@ -3272,7 +3275,8 @@ ALTER TABLE ONLY public.comentario
 --
 
 ALTER TABLE ONLY public.pregunta
-    ADD CONSTRAINT fk_pregunta_usuario FOREIGN KEY (usuario) REFERENCES public.usuario(correo);
+    ADD CONSTRAINT fk_pregunta_usuario FOREIGN KEY (usuario) REFERENCES public.usuario(correo)
+	ON DELETE CASCADE;
 
 
 --
