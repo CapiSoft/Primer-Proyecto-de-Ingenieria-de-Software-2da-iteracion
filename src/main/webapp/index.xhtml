@@ -46,9 +46,9 @@
                 <f:param name="id" value="#{pregunta.idPregunta}"/>
               </p:link>
             </h4>
-            <h4>
-              <h:form>
-                <h:commandButton value="Eliminar" rendered="#{eliminarPregunta.puedeEliminar(pregunta)}" action="#{eliminarPregunta.eliminar(pregunta.idPregunta)}"/>
+            <h4>                
+              <h:form>                 
+               <h:commandButton value="Eliminar" rendered="#{eliminarPregunta.puedeEliminar(pregunta)}" action="#{eliminarPregunta.eliminar(pregunta.idPregunta)}"/>
               </h:form>
             </h4>
           </b:column>
